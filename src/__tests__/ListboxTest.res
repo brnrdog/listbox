@@ -1,5 +1,6 @@
 open Jest
 open ReactTestingLibrary
+open DomTestingLibrary
 include TestUtils
 
 module ListboxComponent = {

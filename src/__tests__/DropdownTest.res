@@ -1,6 +1,7 @@
 open ReactTestingLibrary
 open Jest
 include TestUtils
+open DomTestingLibrary
 
 module DropdownListboxComponent = {
   let options = ["Red", "Green", "Blue"]
@@ -58,10 +59,7 @@ test("select option when clicked", () => {
   component |> getByRole(~matcher=#Str("listbox")) |> expect |> toBeVisible |> assertAndContinue
 
   component
-  |> getByRole(
-    ~matcher=#Str("option"),
-    ~options=DomTestingLibrary.ByRoleQuery.makeOptions(~name="Blue", ()),
-  )
+  |> getByRole(~matcher=#Str("option"), ~options=ByRoleQuery.makeOptions(~name="Blue", ()))
   |> FireEvent.click
 
   component |> getByRole(~matcher=#Str("button")) |> expect |> toHaveTextContent(#Str("Blue"))
@@ -90,10 +88,7 @@ test("allow multiple selection when multiSelect is true", () => {
   component |> getByRole(~matcher=#Str("button")) |> FireEvent.pressSpace
 
   component
-  |> getByRole(
-    ~matcher=#Str("button"),
-    ~options=DomTestingLibrary.ByRoleQuery.makeOptions(~name="Red, Green", ()),
-  )
+  |> getByRole(~matcher=#Str("button"), ~options=ByRoleQuery.makeOptions(~name="Red, Green", ()))
   |> expect
   |> toBeInTheDocument
 })
@@ -105,10 +100,7 @@ test("hide listbox when focusing out from listbox", () => {
   screen |> getByRole(~matcher=#Str("listbox")) |> expect |> toBeVisible |> assertAndContinue
   screen |> getByRole(~matcher=#Str("listbox")) |> FireEvent.blur
   screen
-  |> getByRole(
-    ~matcher=#Str("listbox"),
-    ~options=DomTestingLibrary.ByRoleQuery.makeOptions(~hidden=true, ()),
-  )
+  |> getByRole(~matcher=#Str("listbox"), ~options=ByRoleQuery.makeOptions(~hidden=true, ()))
   |> expect
   |> not__
   |> toBeVisible
